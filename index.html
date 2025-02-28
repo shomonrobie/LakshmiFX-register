@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LakshmiFX Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #f0f0f0; }
+        h1 { color: #333; }
+        input { padding: 10px; width: 250px; margin: 10px; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>LakshmiFX - Unlock Your Perks</h1>
+    <p>Enter your email to get a 7-day Risk Manager trial and exclusive updates!</p>
+    <form id="registerForm">
+        <input type="email" id="email" placeholder="Your Email" required><br>
+        <input type="text" id="accountId" placeholder="MT5 Account ID (Optional)"><br>
+        <button type="submit">Register</button>
+    </form>
+    <p id="message"></p>
+
+    <script>
+        const form = document.getElementById('registerForm');
+        const message = document.getElementById('message');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const accountId = document.getElementById('accountId').value;
+
+            // Google Sheets Apps Script URL (replace with yours after Step 3)
+            const scriptURL = 'https://script.google.com/macros/s/your-script-id/exec';
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, accountId: accountId })
+            })
+            .then(() => {
+                message.innerHTML = "Thanks! Check your email for your trial link.";
+                form.reset();
+            })
+            .catch(error => message.innerHTML = "Error: " + error.message);
+        });
+    </script>
+</body>
+</html>
